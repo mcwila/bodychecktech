@@ -67,6 +67,25 @@
         margin-top: 100px;
         font-size: 20px;
       }
+      table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 90%;
+        font-size: 27px;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .heading2 {
+        text-align: center;
+        font-size: 40px;
+      }
     </style>
   </head>
 
@@ -98,5 +117,228 @@
         document.getElementById("output").textContent = `You entered: ${input}`;
       }
     </script>
+
+    <script>
+      function handleResponse(answer, outputId) {
+        document.getElementById(
+          outputId
+        ).textContent = `You answered: ${answer}`;
+      }
+    </script>
+
+    <div class="input-section">
+      <h2>Select Weight Range in pounds</h2>
+      <input type="radio" name="weight-range" value="60-80" /> 60-80 <br />
+      <input type="radio" name="weight-range" value="81-100" /> 81-100 <br />
+      <input type="radio" name="weight-range" value="101-120" /> 101-120 <br />
+      <input type="radio" name="weight-range" value="121-140" /> 121-140<br />
+      <input type="radio" name="weight-range" value="141-160" /> 141-160 <br />
+      <input type="radio" name="weight-range" value="161-180" /> 161-180<br />
+      <input type="radio" name="weight-range" value="181-200" /> 181-200 <br />
+      <input type="radio" name="weight-range" value="201-220" /> 201-220<br />
+      <input type="radio" name="weight-range" value="221-240" /> 221-240<br />
+      <input type="radio" name="weight-range" value="241-260" /> 241-260<br />
+      <input type="radio" name="weight-range" value="261-280" /> 261-280<br />
+      <input type="radio" name="weight-range" value="281-300" /> 281-300<br />
+    </div>
+
+    <script>
+      function handleResponse(answer, outputId) {
+        document.getElementById(
+          outputId
+        ).textContent = `You answered: ${answer}`;
+      }
+    </script>
+
+    <div class="input-section">
+      <button onclick="submitInformation()">Submit</button>
+    </div>
+
+    <script>
+      function submitInformation() {
+        // Get the user input
+        let userHeight = parseInt(
+          document.getElementById("userInput").value.trim(),
+          10
+        );
+        let userWeightRange = document.querySelector(
+          'input[name="weight-range"]:checked'
+        )?.value;
+
+        if (!userHeight || !userWeightRange) {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        // Parse the user's weight range into a numerical range
+        let weightRangeParts = userWeightRange
+          .split("-")
+          .map((num) => parseInt(num, 10));
+        let minWeight = weightRangeParts[0];
+        let maxWeight = weightRangeParts[1];
+
+        // Find all the table rows
+        const rows = document.querySelectorAll("table tbody tr");
+
+        // Loop through the rows to check for a match
+        rows.forEach((row) => {
+          // Get the cells in the row
+          const cells = row.getElementsByTagName("td");
+
+          if (cells.length > 0) {
+            // Extract and parse height range
+            const heightRange = cells[0].innerText.trim();
+            let heightMatches = false;
+            if (heightRange.includes("< 63")) {
+              heightMatches = userHeight < 63;
+            } else if (heightRange.includes("64-66")) {
+              heightMatches = userHeight >= 64 && userHeight <= 66;
+            } else if (heightRange.includes("67-69")) {
+              heightMatches = userHeight >= 67 && userHeight <= 69;
+            } else if (heightRange.includes("70-72")) {
+              heightMatches = userHeight >= 70 && userHeight <= 72;
+            } else if (heightRange.includes("> 72")) {
+              heightMatches = userHeight > 72;
+            }
+
+            // Extract and parse weight range
+            const weightRange = cells[1].innerText.trim();
+            let weightMatches = false;
+
+            if (weightRange.includes("< 125")) {
+              weightMatches = minWeight < 125;
+            } else if (weightRange.includes("126-145")) {
+              weightMatches = minWeight >= 126 && maxWeight <= 145;
+            } else if (weightRange.includes("146-165")) {
+              weightMatches = minWeight >= 146 && maxWeight <= 165;
+            } else if (weightRange.includes("166-185")) {
+              weightMatches = minWeight >= 166 && maxWeight <= 185;
+            } else if (weightRange.includes("> 185")) {
+              weightMatches = minWeight > 185;
+            }
+
+            // Highlight the row if both height and weight match
+            if (heightMatches && weightMatches) {
+              row.style.backgroundColor = "#9c929a"; // Highlight the row
+            } else {
+              row.style.backgroundColor = ""; // Reset the background color
+            }
+          }
+        });
+      }
+    </script>
+
+    <h2 class="heading2">Shirt Guide</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 20%">Height Range</th>
+          <th style="width: 20%">Weight</th>
+          <th style="width: 20%">Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>< 63 <br />64-66</td>
+          <td>
+            < 125 <br />
+            < 130
+          </td>
+          <td>XS</td>
+        </tr>
+        <tr>
+          <td>
+            < 63 <br />
+            64-66 <br />
+            67-69 <br />
+            70-72
+          </td>
+          <td>
+            126-145 <br />
+            131-150 <br />
+            < 140 <br />
+            < 150
+          </td>
+          <td>S</td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td>
+            < 63 <br />
+            64-66 <br />
+            67-69 <br />
+            70-72 <br />
+            > 61
+          </td>
+          <td>
+            146-165 <br />
+            151-170 <br />
+            141-160 <br />
+            151-170 <br />
+            < 160
+          </td>
+          <td>M</td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td>
+            < 63 <br />
+            64-66 <br />
+            67-69 <br />
+            70-72 <br />
+            > 61
+          </td>
+          <td>
+            166-185 <br />171-190 <br />161-180 <br />171-190 <br />161-180
+          </td>
+          <td>L</td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td>
+            < 63 <br />
+            64-66 <br />
+            67-69 <br />
+            70-72 <br />
+            > 61
+          </td>
+          <td>
+            186-205 <br />191-210 <br />181-200 <br />191-210 <br />181-200
+          </td>
+          <td>XL</td>
+        </tr>
+        <tr>
+          <td>
+            < 63 <br />
+            64-66 <br />
+            67-69 <br />
+            70-72 <br />
+            > 61
+          </td>
+          <td>
+            > 205 <br />
+            > 210 <br />201-220 <br />211-230 <br />201-220
+          </td>
+          <td>XXL</td>
+        </tr>
+        <tr>
+          <td>
+            67-69 <br />
+            70-72 <br />
+            > 61
+          </td>
+          <td>
+            >220 <br />
+            > 230 <br />221-240
+          </td>
+          <td>XXXL</td>
+        </tr>
+        <tr>
+          <td>> 61</td>
+          <td>> 240</td>
+          <td>XXXXL</td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>

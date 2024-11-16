@@ -74,7 +74,18 @@
       <a href="adjustment.html">Adjustments</a>
       <a href="resources.html">Resources</a>
     </div>
-    <h1 class="heading1">Accuracy</h1>
-    <h1 class="heading1">Back Flexion</h1>
+    <h1 class="heading1">Deviations per set</h1>
+    <p class="paragraph1">
+      This graph shows the number of deviations found per set
+    </p>
+    <h1 class="heading1">Voltage vs. Time</h1>
+    <p class="paragraph1">
+      This graph shows the voltage that was collected from the arduino. We have
+      collected a voltage output every _________ seconds. This helps us
+      determine whether or not spinal flexion occured or not.
+    </p>
+    <canvas id="voltageGraph" width="800" height="400"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="voltage.js"></script>
   </body>
 </html>
